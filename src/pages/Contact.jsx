@@ -1,0 +1,146 @@
+import React, { useState } from "react";
+import { Container, Row, Col, Form, FormGroup, Input } from "reactstrap";
+import Helmet from "../components/Helmet/Helmet.jsx";
+import CommonSection from "../components/UI/CommonSection";
+
+import "../styles/contact.css";
+
+const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: ""
+  });
+  const [status, setStatus] = useState(""); // For feedback messages (success or error)
+  const [isLoading, setIsLoading] = useState(false); // To manage loading state
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Simple form validation
+    if (!formData.name || !formData.email || !formData.message) {
+      setStatus("All fields are required.");
+      return;
+    }
+
+    setIsLoading(true);
+    setStatus(""); // Reset status message before submitting
+
+    try {
+      const response = await fetch("http://localhost:8080/MegaCity_war_exploded/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setStatus("Message sent successfully!");
+        setFormData({ name: "", email: "", message: "" }); // Reset form
+      } else {
+        setStatus(result.error || "Error sending message.");
+      }
+    } catch (error) {
+      setStatus("Error sending message.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+      <Helmet title="Contact">
+        <CommonSection title="Contact" />
+        <section>
+          <Container>
+            <Row>
+              <Col lg="7" md="7">
+                <h6 className="fw-bold mb-4">Get In Touch</h6>
+
+                <form onSubmit={handleSubmit}>
+                  <FormGroup className="contact__form">
+                    <Input
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        placeholder="Your Name"
+                        type="text"
+                        required
+                    />
+                  </FormGroup>
+                  <FormGroup className="contact__form">
+                    <Input
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="Email"
+                        type="email"
+                        required
+                    />
+                  </FormGroup>
+                  <FormGroup className="contact__form">
+                                    <textarea
+                                        name="message"
+                                        value={formData.message}
+                                        onChange={handleChange}
+                                        rows="5"
+                                        placeholder="Message"
+                                        className="textarea"
+                                        required
+                                    ></textarea>
+                  </FormGroup>
+
+                  <button className="contact__btn" type="submit" disabled={isLoading}>
+                    {isLoading ? "Sending..." : "Send Message"}
+                  </button>
+                </form>
+              </Col>
+
+              <Col lg="5" md="5">
+                <div className="contact__info">
+                  <h6 className="fw-bold">Contact Information</h6>
+                  <p className="section__description mb-0">
+                    519 Colombo City,Western Sri Lanka
+                  </p>
+                  <div className=" d-flex align-items-center gap-2">
+                    <h6 className="fs-6 mb-0">Phone:</h6>
+                    <p className="section__description mb-0">+94 760368019</p>
+                  </div>
+
+                  <div className=" d-flex align-items-center gap-2">
+                    <h6 className="mb-0 fs-6">Email:</h6>
+                    <p className="section__description mb-0">prabhashWije2001@gmail.com</p>
+                  </div>
+
+                  <h6 className="fw-bold mt-4">Follow Us</h6>
+
+                  <div className="d-flex align-items-center gap-4 mt-3">
+                    <a href="#" className="social__link-icon">
+                      <i className="ri-facebook-line"></i>
+                    </a>
+                    <a href="#" className="social__link-icon">
+                      <i className="ri-instagram-line"></i>
+                    </a>
+                    <a href="#" className="social__link-icon">
+                      <i className="ri-linkedin-line"></i>
+                    </a>
+                    <a href="#" className="social__link-icon">
+                      <i className="ri-twitter-line"></i>
+                    </a>
+                  </div>
+                </div>
+              </Col>
+            </Row>
+          </Container>
+        </section>
+      </Helmet>
+  );
+};
+
+export default Contact;

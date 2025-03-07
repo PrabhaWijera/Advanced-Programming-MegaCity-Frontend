@@ -1,0 +1,157 @@
+/* Global styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f4f8;
+    margin: 0;
+    padding: 0;
+}
+
+/* Register container */
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+}
+
+.register-form-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+}
+
+/* Form section */
+.form-section {
+    width: 50%;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.register-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.register-input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+.register-input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.4);
+}
+
+.register-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.register-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+/* Google Auth Button */
+.google-auth-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #db4437;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.google-auth-btn:hover {
+    background-color: #c1351d;
+    transform: translateY(-2px);
+}
+
+/* Login link */
+.auth-links {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+}
+
+.login-link {
+    text-align: center;
+    font-size: 1rem;
+    color: #007bff;
+    text-decoration: none;
+    margin-bottom: 10px;
+}
+
+.login-link:hover {
+    text-decoration: underline;
+}
+
+/* Image Section */
+.image-section {
+    width: 50%;
+    padding-left: 20px;
+}
+
+.register-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .register-form-container {
+        flex-direction: column;
+    }
+
+    .form-section {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .image-section {
+        display: none; /* Hide image on mobile for better layout */
+    }
+}
+
+@media (max-width: 600px) {
+    .register-title {
+        font-size: 2rem;
+    }
+
+    .register-input,
+    .register-btn,
+    .google-auth-btn {
+        font-size: 1rem;
+    }
+}

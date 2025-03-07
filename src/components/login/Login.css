@@ -1,0 +1,254 @@
+/* Full-screen background */
+.login-container {
+    height: 100vh;
+    background: url('your-background-image.jpg') no-repeat center center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Form container styling */
+.form-container {
+    background: rgba(255, 255, 255, 0.1); /* Frosted glass effect */
+    backdrop-filter: blur(10px); /* Frosted glass blur */
+    border-radius: 15px;
+    padding: 30px;
+    width: 100%;
+    max-width: 400px; /* You can adjust the size */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    color: #333;
+}
+
+/* Title Styling */
+.form-title {
+    text-align: center;
+    color: #333;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Input fields */
+.input-container {
+    margin-bottom: 20px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 12px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 1rem;
+    color: #333;
+}
+
+.input-field::placeholder {
+    color: #aaa;
+}
+
+/* Input focus effect */
+.input-field:focus {
+    outline: none;
+    border-color: #4A90E2; /* Blue focus border */
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+}
+
+/* Remember me & forgot password */
+.options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+}
+
+.forgot-password {
+    color: #4A90E2;
+    font-size: 0.9rem;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+/* Login button */
+.login-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(145deg, #4A90E2, #357ABD);
+    color: white;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+    background: linear-gradient(145deg, #357ABD, #4A90E2);
+}
+
+/* Register link */
+.register-link {
+    text-align: center;
+    margin-top: 20px;
+    color: #555;
+}
+
+.register-link a {
+    color: #4A90E2;
+    text-decoration: none;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
+
+/* Error message *//* Full-screen background */
+.login-container {
+    height: 100vh;
+    background: url('your-background-image.jpg') no-repeat center center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Form container styling */
+.form-container {
+    background: rgba(255, 255, 255, 0.1); /* Frosted glass effect */
+    backdrop-filter: blur(10px); /* Frosted glass blur */
+    border-radius: 15px;
+    padding: 30px;
+    width: 100%;
+    max-width: 400px; /* You can adjust the size */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    color: #333;
+}
+
+/* Title Styling */
+.form-title {
+    text-align: center;
+    color: #333;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Input fields */
+.input-container {
+    margin-bottom: 20px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 12px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 1rem;
+    color: #333;
+}
+
+.input-field::placeholder {
+    color: #aaa;
+}
+
+/* Input focus effect */
+.input-field:focus {
+    outline: none;
+    border-color: #4A90E2; /* Blue focus border */
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+}
+
+/* Remember me & forgot password */
+.options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+}
+
+.forgot-password {
+    color: #4A90E2;
+    font-size: 0.9rem;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+/* Login button */
+.login-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(145deg, #4A90E2, #357ABD);
+    color: white;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+    background: linear-gradient(145deg, #357ABD, #4A90E2);
+}
+
+/* Register link */
+.register-link {
+    text-align: center;
+    margin-top: 20px;
+    color: #555;
+}
+
+.register-link a {
+    color: #4A90E2;
+    text-decoration: none;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
+
+/* Error message */
+.error-message {
+    color: red;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+    .form-container {
+        width: 90%;
+        padding: 20px;
+    }
+}
+
+.error-message {
+    color: red;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+    .form-container {
+        width: 90%;
+        padding: 20px;
+    }
+}

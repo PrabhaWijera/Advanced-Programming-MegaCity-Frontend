@@ -1,0 +1,11 @@
+{
+  "uptime": 123,
+  "serverStatus": "Online",
+  "databaseStatus": "Connected",
+  "stressLevel": 65,
+  "performance": 80,
+  "dataVolume": 50,
+  "cpuUsage": [20, 30, 25, 40, 35],
+  "memoryUsage": [50, 55, 60, 52, 58],
+  "apiResponseTimes": [150, 200, 180, 190, 170]
+}
