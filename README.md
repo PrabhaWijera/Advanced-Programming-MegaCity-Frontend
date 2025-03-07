@@ -33,10 +33,8 @@ Mega City Cab is a cab service based in Colombo, where customers use cabs on a d
 ## Technologies Used
 
 - React (Frontend)
-- Node.js (Backend - Optional)
-- Express.js (Backend - Optional)
-- MongoDB or LocalStorage for Data Persistence (Backend - Optional)
-- CSS (Styling)
+- Java Servlet with MYSQL
+- CSS & BOOSTRAP (Styling)
 
 ## Setup Instructions
 
