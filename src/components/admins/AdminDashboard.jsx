@@ -149,6 +149,11 @@ const AdminDashboard = () => {
                             Payments Management
                         </Button>
                     </Link>
+                    <Link to={'/sacnnedQR'}>
+                        <Button variant="light" className="w-100 mb-2">
+                            Check the QR codes
+                        </Button>
+                    </Link>
                 </Col>
                 <Col md={9} className="p-4">
                     <Row>

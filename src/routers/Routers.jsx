@@ -20,6 +20,7 @@ import CarForm from "../components/admins/serives/CarandImage.jsx";
 import UserList from "../components/admins/adminpages/UserList.jsx";
 import BookingManage from "../components/admins/serives/BookingManage.jsx";
 import Payment from "../components/admins/serives/Payment.jsx";
+import QRCodeScanner from "../components/admins/adminpages/QRCodeScanner.jsx";
 
 
 const Routers = () => {
@@ -53,6 +54,7 @@ const Routers = () => {
         <Route path="/admin-faq" element={<AdminServiceHelp />} />
         <Route path="/admin-profile" element={<AdminProfile />} />
         <Route path="/admin-user" element={<UserList />} />
+        <Route path="/sacnnedQR" element={<QRCodeScanner />} />
         <Route path="/booking" element={<BookingManage />} />
         <Route path="/carswithimages" element={<CarForm />} />
         <Route path="/Payments" element={<Payment />} />
