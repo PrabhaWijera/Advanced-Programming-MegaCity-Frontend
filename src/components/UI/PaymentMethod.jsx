@@ -3,6 +3,7 @@ import masterCard from "../../assets/all-images/master-card.jpg";
 import paypal from "../../assets/all-images/paypal.jpg";
 import "../../styles/payment-method.css";
 import axios from "axios";
+import QRCodeGenerator from "./QRCodeGenerator.jsx";
 
 const API_URL = "http://localhost:8080/MegaCity_war_exploded/payment";
 const USER_PROFILE_URL = "http://localhost:8080/MegaCity_war_exploded/profile";
@@ -10,6 +11,7 @@ const BOOKING_URL = "http://localhost:8080/MegaCity_war_exploded/booking";
 // eslint-disable-next-line react/prop-types
 const PaymentMethod = ({UserData}) => {
     const [payments, setPayments] = useState([]);
+    const [qrData, setQrData] = useState("");
     const[BookingDetails,setBookingDetails]=useState(null);
     const [formData, setFormData] = useState({
         bookingId: BookingDetails,
@@ -87,15 +89,40 @@ const PaymentMethod = ({UserData}) => {
     };
 
     // Submit new payment
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     try {
+    //         await axios.post(API_URL, formData);
+    //         alert("Payment successful!");
+    //     } catch (error) {
+    //         alert("Payment failed!");
+    //         console.error("Error:", error);
+    //     }
+    // };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post(API_URL, formData);
+            const response = await axios.post(API_URL, formData);
+
+            if (response.status === 201) {
+                console.log("Payment was created successfully:", response.data);
+                setQrData(JSON.stringify(formData));
+            }
+
             alert("Payment successful!");
         } catch (error) {
             alert("Payment failed!");
             console.error("Error:", error);
         }
+    };
+
+    const handleDownload = (imageURL) => {
+        // Create an anchor element to download the image
+        const link = document.createElement('a');
+        link.href = imageURL;
+        link.download = 'QR.png'; // Set the download file name
+        link.click(); // Trigger the download
     };
 
     return (
@@ -148,9 +175,8 @@ const PaymentMethod = ({UserData}) => {
                         <label htmlFor="currency" className="form-label">Currency:</label>
                         <select name="currency" id="currency" className="form-select" value={formData.currency}
                                 onChange={handleChange}>
-                            <option value="USD">USD</option>
-                            <option value="EUR">EUR</option>
-                            <option value="INR">INR</option>
+                            <option value="LKR">LKR</option>
+
                         </select>
                     </div>
 
@@ -177,6 +203,8 @@ const PaymentMethod = ({UserData}) => {
                     </div>
 
                     <button type="submit" className="btn btn-primary w-100">Make Payment</button>
+                    {/* Display QR code if data is available */}
+                    {qrData && <QRCodeGenerator data={qrData} onDownload={handleDownload} />}
                 </div>
             </form>
         </div>
