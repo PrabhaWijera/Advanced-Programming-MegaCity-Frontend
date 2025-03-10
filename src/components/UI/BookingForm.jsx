@@ -3,7 +3,8 @@ import "../../styles/booking-form.css";
 import { Col, Form } from "reactstrap";
 import axios from "axios";
 import PaymentMethod from "./PaymentMethod.jsx";
-import placesandprces from "../../assets/data/placeandprice.json"; // Ensure this path is correct
+import placesandprces from "../../assets/data/placeandprice.json";
+import ToastNotification, {showToast} from "./ToastNotification.jsx"; // Ensure this path is correct
 
 const BookingForm = ({ carData, backendCarData }) => {
     const [user, setUser] = useState(null);
@@ -127,18 +128,20 @@ const BookingForm = ({ carData, backendCarData }) => {
 
             if (response.status === 200) {
                 setIsVisible(true);
+                showToast(200, "Book is successfully! ✅");
             }
 
             alert(response.data);
         } catch (error) {
             console.error('Error creating booking', error);
-            alert('Error creating booking');
+            showToast(500, "Error: Something went wrong! ❌");
         }
     };
 
     return (
         <div className="container mt-5">
             <div className="row">
+                <ToastNotification />
                 <Col lg="12" className="mb-5">
                     <Form onSubmit={handleSubmit}>
                         <div className="mb-3">
