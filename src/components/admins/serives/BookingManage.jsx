@@ -78,67 +78,72 @@ const BookingReport = ({ booking, user, car }) => {
         },
     });
 
+    // Check if booking, user, or car is null/undefined before rendering
+    if (!booking || !user || !car) {
+        return <Text style={{ color: 'red' }} x={100} y={500}>Missing required data!</Text>;
+    }
+
     return (
         <Document>
             <Page style={styles.page}>
                 {/* Header with Logo and Shop Name */}
                 <View style={styles.header}>
                     <Image src={imageDocument} style={styles.logo} />
-                    <Text style={styles.heading}>Mega City Car Services</Text>
+                    <Text style={styles.heading} x={100} y={500}>Mega City Car Services</Text>
                 </View>
+
                 {/* User Details Section */}
                 <View style={styles.section}>
-                    <Text style={styles.subheading}>User Information</Text>
+                    <Text style={styles.subheading} x={100} y={500}>User Information</Text>
                     {/* eslint-disable-next-line react/prop-types */}
-                    <Text style={styles.content}><strong>Booking ID:</strong> {booking.id}</Text>
+                    <Text style={styles.content} x={100} y={500}><strong>Booking ID:</strong> {booking.id}</Text>
+                    {/* Check if user.email exists before rendering */}
                     {/* eslint-disable-next-line react/prop-types */}
-                    {/*<Text style={styles.content}><strong>User Name:</strong> {user.email}</Text>*/}
+                    {user.email && <Text style={styles.content} x={100} y={500}><strong>User Email:</strong> {user.email}</Text>}
+                    {/* Check if user.phone exists before rendering */}
                     {/* eslint-disable-next-line react/prop-types */}
-                    <Text style={styles.content}><strong>User Phone:</strong> {user.phone}</Text>
+                    {user.phone && <Text style={styles.content} x={100} y={500}><strong>User Phone:</strong> {user.phone}</Text>}
                 </View>
 
                 {/* Booking Details Section */}
                 <View style={styles.section}>
-                    <Text style={styles.subheading}>Booking Details</Text>
+                    <Text style={styles.subheading} x={100} y={500}>Booking Details</Text>
                     {/* eslint-disable-next-line react/prop-types */}
-                    <Text style={styles.content}><strong>Start Date:</strong> {booking.startDate}</Text>
+                    <Text style={styles.content} x={100} y={500}><strong>Start Date:</strong> {booking.startDate}</Text>
                     {/* eslint-disable-next-line react/prop-types */}
-                    <Text style={styles.content}><strong>End Date:</strong> {booking.endDate}</Text>
+                    <Text style={styles.content} x={100} y={500}><strong>End Date:</strong> {booking.endDate}</Text>
                     {/* eslint-disable-next-line react/prop-types */}
-                    <Text style={styles.content}><strong>Driver Name:</strong> {booking.driverName}</Text>
+                    <Text style={styles.content} x={100} y={500}><strong>Driver Name:</strong> {booking.driverName}</Text>
                     {/* eslint-disable-next-line react/prop-types */}
-                    <Text style={styles.content}><strong>From:</strong> {booking.fromPlace}</Text>
+                    <Text style={styles.content} x={100} y={500}><strong>From:</strong> {booking.fromPlace}</Text>
                     {/* eslint-disable-next-line react/prop-types */}
-                    <Text style={styles.content}><strong>To:</strong> {booking.toPlace}</Text>
+                    <Text style={styles.content} x={100} y={500}><strong>To:</strong> {booking.toPlace}</Text>
                     {/* eslint-disable-next-line react/prop-types */}
-                    <Text style={styles.content}><strong>Amount:</strong> LKR {booking.totalAmount}</Text>
+                    <Text style={styles.content} x={100} y={500}><strong>Amount:</strong> LKR {booking.totalAmount}</Text>
                     {/* eslint-disable-next-line react/prop-types */}
-                    <Text style={styles.content}><strong>Payment Status:</strong> {booking.status}</Text>
+                    <Text style={styles.content} x={100} y={500}><strong>Payment Status:</strong> {booking.status}</Text>
                 </View>
 
                 {/* Vehicle Details Section */}
                 <View style={styles.section}>
-                    <Text style={styles.subheading}>Vehicle Information</Text>
+                    <Text style={styles.subheading} x={100} y={500}>Vehicle Information</Text>
                     {/* eslint-disable-next-line react/prop-types */}
-                    <Text style={styles.content}><strong>Car Name:</strong> {car.name}</Text>
-                    <Text style={styles.content}><strong>Plate Number:</strong> {car.plate_number}</Text>
+                    <Text style={styles.content} x={100} y={500}><strong>Car Name:</strong> {car.name}</Text>
+                    <Text style={styles.content} x={100} y={500}><strong>Plate Number:</strong> {car.plate_number}</Text>
                 </View>
 
-                {/* Paragraph about services */}
                 {/* Footer with company contact details */}
                 <View style={styles.footer}>
-                    <Text> Thank you for choosing Mega City Car Services for your transportation needs. Our mission is to provide you with reliable, comfortable, and safe travel experiences. Should you have any inquiries or require further assistance, please don’t hesitate to contact us.</Text>
-                    <Text style={styles.footerDetails}>Email: contact@megacitycarservices.com</Text>
-                    <Text style={styles.footerDetails}>Phone: +94 123 456 789</Text>
-                    <Text style={styles.footerDetails}>Website: www.megacitycarservices.com</Text>
+                    <Text x={100} y={500}> Thank you for choosing Mega City Car Services for your transportation needs. Our mission is to provide you with reliable, comfortable, and safe travel experiences. Should you have any inquiries or require further assistance, please don’t hesitate to contact us.</Text>
+                    <Text style={styles.footerDetails}x={100} y={500}>Email: contact@megacitycarservices.com</Text>
+                    <Text style={styles.footerDetails}x={100} y={500}>Phone: +94 123 456 789</Text>
+                    <Text style={styles.footerDetails} x={100} y={500}>Website: www.megacitycarservices.com</Text>
                 </View>
-
-
-
             </Page>
         </Document>
     );
 };
+
 
 // Admin Booking Panel Component
 export default function BookingManage() {
