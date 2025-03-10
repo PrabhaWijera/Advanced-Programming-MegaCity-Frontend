@@ -231,7 +231,7 @@ const BookingForm = ({ carData, backendCarData }) => {
 
                 {IsVisible && (
                     <Col lg="12" className="mt-5">
-                        <PaymentMethod UserData={user?.id} />
+                        <PaymentMethod UserData={user?.id} BookingData={totalAmount}/>
                     </Col>
                 )}
             </div>

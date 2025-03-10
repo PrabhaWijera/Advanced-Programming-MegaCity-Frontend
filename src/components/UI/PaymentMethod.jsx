@@ -8,8 +8,13 @@ import QRCodeGenerator from "./QRCodeGenerator.jsx";
 const API_URL = "http://localhost:8080/MegaCity_war_exploded/payment";
 const USER_PROFILE_URL = "http://localhost:8080/MegaCity_war_exploded/profile";
 const BOOKING_URL = "http://localhost:8080/MegaCity_war_exploded/booking";
+
+const generateTransactionId = () => {
+    return "TXN-" + Date.now() + "-" + Math.floor(Math.random() * 10000);
+};
+
 // eslint-disable-next-line react/prop-types
-const PaymentMethod = ({UserData}) => {
+const PaymentMethod = ({UserData,BookingData}) => {
     const [payments, setPayments] = useState([]);
     const [qrData, setQrData] = useState("");
     const[BookingDetails,setBookingDetails]=useState(null);
@@ -17,17 +22,18 @@ const PaymentMethod = ({UserData}) => {
         bookingId: BookingDetails,
         // eslint-disable-next-line react/prop-types
         userId: UserData,
-        paymentAmount: "",
+        paymentAmount: BookingData,
         currency: "LKR",
         paymentMethod: "credit_card",
         paymentStatus: "",
-        transactionId: ""
+        transactionId: generateTransactionId()
     });
 
     const [paymentStatusUpdate, setPaymentStatusUpdate] = useState("");
     const [paymentIdToUpdate, setPaymentIdToUpdate] = useState("");
 
     useEffect(() => {
+
         axios.get(API_URL)
             .then(response => setPayments(response.data))
             .catch(error => console.error("Error fetching payments:", error));
@@ -186,7 +192,6 @@ const PaymentMethod = ({UserData}) => {
                                 value={formData.paymentStatus} onChange={handleChange}>
                             <option value="pending">Pending</option>
                             <option value="completed">Completed</option>
-                            <option value="failed">Failed</option>
                         </select>
                     </div>
 
@@ -199,6 +204,7 @@ const PaymentMethod = ({UserData}) => {
                             id="transactionId"
                             value={formData.transactionId}
                             onChange={handleChange}
+                            readOnly // Prevent user from modifying it
                         />
                     </div>
 
