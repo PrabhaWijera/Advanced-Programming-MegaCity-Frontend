@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Container, Row, Col, Form, FormGroup, Input } from "reactstrap";
 import Helmet from "../components/Helmet/Helmet.jsx";
 import CommonSection from "../components/UI/CommonSection";
-
+import ToastNotification, { showToast } from "../../src/components/UI/ToastNotification.jsx";
 import "../styles/contact.css";
 
 const Contact = () => {
@@ -41,13 +41,16 @@ const Contact = () => {
 
       const result = await response.json();
 
-      if (response.ok) {
+      if (response.status === 200) {
+        showToast(200, "Message sent successfully! ✅");
         setStatus("Message sent successfully!");
         setFormData({ name: "", email: "", message: "" }); // Reset form
       } else {
         setStatus(result.error || "Error sending message.");
       }
+      // eslint-disable-next-line no-unused-vars
     } catch (error) {
+      showToast(500, "Error: Something went wrong! ❌");
       setStatus("Error sending message.");
     } finally {
       setIsLoading(false);
@@ -58,6 +61,7 @@ const Contact = () => {
       <Helmet title="Contact">
         <CommonSection title="Contact" />
         <section>
+          <ToastNotification />
           <Container>
             <Row>
               <Col lg="7" md="7">
