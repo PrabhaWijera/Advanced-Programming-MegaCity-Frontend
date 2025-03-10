@@ -21,6 +21,7 @@ import UserList from "../components/admins/adminpages/UserList.jsx";
 import BookingManage from "../components/admins/serives/BookingManage.jsx";
 import Payment from "../components/admins/serives/Payment.jsx";
 import QRCodeScanner from "../components/admins/adminpages/QRCodeScanner.jsx";
+import DriverDash from "../components/Driver/DriverDash.jsx";
 
 
 const Routers = () => {
@@ -45,6 +46,8 @@ const Routers = () => {
         <Route path="/profile" element={<Profile />} />
 
 
+
+        <Route path="/driver" element={<DriverDash/>} />
         <Route path="/assinBooking" element={<DriverAssignBooking />} />
 
 
