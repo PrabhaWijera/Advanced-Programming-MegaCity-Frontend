@@ -1,6 +1,7 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import './Register.css';
+import ToastNotification, {showToast} from "../UI/ToastNotification.jsx";
 const Register = () => {
     const [userData, setUserData] = useState({
         username: "",
@@ -34,7 +35,11 @@ const Register = () => {
             );
             console.log(URLSearchParams);
             console.log(response.data.message);
+            if(response.status === 201 || response.status === 200) {
+                showToast(200, "Book is successfully! ✅");
+            }
         } catch (error) {
+            showToast(500, "Error: Something went wrong! ❌");
             console.error("Error during registration:", error.response?.data?.error || "Unknown error");
         }
     };
@@ -44,6 +49,7 @@ const Register = () => {
 
     return (
         <div className="container vh-80 bg-light mt-5 mb-5 " >
+            <ToastNotification />
             <div className="row justify-content-center" >
                 <div className="col-lg-6 col-md-8 col-12">
                     <div className="card shadow-lg border-0">
