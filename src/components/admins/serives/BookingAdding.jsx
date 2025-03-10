@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import ToastNotification, {showToast} from "../../UI/ToastNotification.jsx";
 
 function BookingAdding() {
     const [user, setUser] = useState(null);
@@ -77,15 +78,18 @@ function BookingAdding() {
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
                 },
             });
-            alert(response.data); // Response from the backend (e.g., booking success message)
+             if(response.status === 200 || response.status === 201) {
+                 showToast(200, "Book is successfully! ✅");
+             }
         } catch (error) {
             console.error('Error creating booking', error);
-            alert('Error creating booking');
+            showToast(500, "Error: Something went wrong! ❌");
         }
     };
 
     return (
         <div className="container mt-5">
+            <ToastNotification />
             <h2 className="mb-4">Book a Car</h2>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
