@@ -4,6 +4,7 @@ import paypal from "../../assets/all-images/paypal.jpg";
 import "../../styles/payment-method.css";
 import axios from "axios";
 import QRCodeGenerator from "./QRCodeGenerator.jsx";
+import ToastNotification, {showToast} from "./ToastNotification.jsx";
 
 const API_URL = "http://localhost:8080/MegaCity_war_exploded/payment";
 const USER_PROFILE_URL = "http://localhost:8080/MegaCity_war_exploded/profile";
@@ -112,13 +113,14 @@ const PaymentMethod = ({UserData,BookingData}) => {
             const response = await axios.post(API_URL, formData);
 
             if (response.status === 201) {
+                showToast(201, "Payment is successfully! ✅");
                 console.log("Payment was created successfully:", response.data);
                 setQrData(JSON.stringify(formData));
             }
 
             alert("Payment successful!");
         } catch (error) {
-            alert("Payment failed!");
+            showToast(500, "Error: Something went wrong! ❌");
             console.error("Error:", error);
         }
     };
@@ -133,6 +135,7 @@ const PaymentMethod = ({UserData,BookingData}) => {
 
     return (
         <div className="container mt-5">
+            <ToastNotification />
             <form onSubmit={handleSubmit}>
 
                 <div className="payment mt-3">
