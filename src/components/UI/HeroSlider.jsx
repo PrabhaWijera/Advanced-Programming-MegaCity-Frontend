@@ -57,6 +57,54 @@ const HeroSlider = () => {
           </div>
         </Container>
       </div>
+      <div className="slider__item slider__item-04 mt0">
+        <Container>
+          <div className="slider__content ">
+            <h4 className="text-light mb-3">For Rent $70 Per Day</h4>
+            <h1 className="text-light mb-4">Reserve Now and Get 50% Off</h1>
+
+            <button className="btn reserve__btn mt-4">
+              <Link to="/cars">Reserve Now</Link>
+            </button>
+          </div>
+        </Container>
+      </div>
+      <div className="slider__item slider__item-05 mt0">
+        <Container>
+          <div className="slider__content ">
+            <h4 className="text-light mb-3">For Rent $70 Per Day</h4>
+            <h1 className="text-light mb-4">Reserve Now and Get 50% Off</h1>
+
+            <button className="btn reserve__btn mt-4">
+              <Link to="/cars">Reserve Now</Link>
+            </button>
+          </div>
+        </Container>
+      </div>
+      <div className="slider__item slider__item-06 mt0">
+        <Container>
+          <div className="slider__content ">
+            <h4 className="text-light mb-3">For Rent $70 Per Day</h4>
+            <h1 className="text-light mb-4">Reserve Now and Get 50% Off</h1>
+
+            <button className="btn reserve__btn mt-4">
+              <Link to="/cars">Reserve Now</Link>
+            </button>
+          </div>
+        </Container>
+      </div>
+      <div className="slider__item slider__item-07 mt0">
+        <Container>
+          <div className="slider__content ">
+            <h4 className="text-light mb-3">For Rent $70 Per Day</h4>
+            <h1 className="text-light mb-4">Reserve Now and Get 50% Off</h1>
+
+            <button className="btn reserve__btn mt-4">
+              <Link to="/cars">Reserve Now</Link>
+            </button>
+          </div>
+        </Container>
+      </div>
     </Slider>
   );
 };
