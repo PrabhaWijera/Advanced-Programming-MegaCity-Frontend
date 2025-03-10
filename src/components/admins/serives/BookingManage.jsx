@@ -6,6 +6,7 @@ import imageDocument from "../../../assets/all-images/login/Black and Orange Car
 import {Link} from "react-router-dom";
 import {Button} from "react-bootstrap";
 import BookingAdding from "./BookingAdding.jsx";
+import ToastNotification, {showToast} from "../../UI/ToastNotification.jsx";
 const API_URL = "http://localhost:8080/MegaCity_war_exploded"; // Backend URL
 
 // Create a PDF Document for a Booking
@@ -234,17 +235,18 @@ export default function BookingManage() {
             .then((res) => res.json())
             .then((data) => {
                 if (data === "Booking Deleted Successfully") {
-                    alert("Booking deleted!");
+                    showToast(200, "Book Delete  is successfully! ✅");
                     setBookings((prevBookings) =>
                         prevBookings.filter((booking) => booking.id !== id)
                     );
                 } else {
-                    alert("Delete failed!");
+                    showToast(500, "Error: Something went wrong! ❌");
                 }
             })
             .catch((err) => {
+                showToast(500, "Error: Something went wrong! ❌");
                 console.error("Error deleting booking:", err);
-                alert("An error occurred while trying to delete the booking.");
+
             });
     };
 
@@ -268,8 +270,8 @@ export default function BookingManage() {
             });
 
             const result = await response.json();
-            if (response.ok) {
-                alert("Booking updated successfully!");
+            if (response.ok ||  response.status === 200 || response.status === 201) {
+                showToast(200, "Book Update is successfully! ✅");
                 setBookings((prevBookings) =>
                     prevBookings.map((booking) =>
                         booking.id === selectedBooking.id ? { ...booking, ...updatedBookingData } : booking
@@ -277,11 +279,11 @@ export default function BookingManage() {
                 );
                 setSelectedBooking(null);
             } else {
-                alert("Update failed!");
+                showToast(500, "Error: Something went wrong! ❌");
             }
         } catch (error) {
             console.error("Error updating booking:", error);
-            alert("An error occurred while updating the booking.");
+            showToast(500, "Error: Something went wrong! ❌");
         }
     };
 
@@ -303,6 +305,7 @@ export default function BookingManage() {
 
     return (
         <div className="container mt-4 mb-4">
+            <ToastNotification />
             <Link to={'/admin'} className='mb-2'>
                 <Button variant="outline-dark" >
                     🔙
