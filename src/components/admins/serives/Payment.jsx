@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import ToastNotification, {showToast} from "../../UI/ToastNotification.jsx";
 
 const API_URL = "http://localhost:8080/MegaCity_war_exploded/payment";
 const USER_PROFILE_URL = "http://localhost:8080/MegaCity_war_exploded/profile";
@@ -89,10 +90,10 @@ const Payment = () => {
         e.preventDefault();
         try {
             await axios.post(API_URL, formData);
-            alert("Payment successful!");
+
             window.location.reload();
         } catch (error) {
-            alert("Payment failed!");
+
             console.error("Error:", error);
         }
     };
@@ -105,10 +106,10 @@ const Payment = () => {
             await axios.put(`${API_URL}?id=${paymentId}`, requestPayload, {
                 headers: { 'Content-Type': 'application/json' }
             });
-            alert("Payment status updated successfully!");
+            showToast(200, "Payment Delete is successfully! ✅");
             window.location.reload();
         } catch (error) {
-            alert("Error updating payment!");
+            showToast(500, "Error: Something went wrong! ❌");
             console.error("Error:", error);
         }
     };
@@ -116,17 +117,20 @@ const Payment = () => {
     // Handle Delete Payment
     const handleDeletePayment = async (paymentId) => {
         try {
-            await axios.delete(`${API_URL}?id=${paymentId}`);
-            alert("Payment deleted successfully!");
+            let response=await axios.delete(`${API_URL}?id=${paymentId}`);
+             if (response.status === 200) {
+                 showToast(200, "Payment Delete is successfully! ✅");
+             }
             window.location.reload();
         } catch (error) {
-            alert("Error deleting payment!");
+            showToast(500, "Error: Something went wrong! ❌");
             console.error("Error:", error);
         }
     };
 
     return (
         <div className="container mt-4">
+            <ToastNotification />
             <div className="card p-4 shadow-sm">
                 <h3 className="mb-3">Make a Payment</h3>
                 <form onSubmit={handleSubmit}>
