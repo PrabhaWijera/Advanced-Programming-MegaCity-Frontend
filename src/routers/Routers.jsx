@@ -22,6 +22,7 @@ import BookingManage from "../components/admins/serives/BookingManage.jsx";
 import Payment from "../components/admins/serives/Payment.jsx";
 import QRCodeScanner from "../components/admins/adminpages/QRCodeScanner.jsx";
 import DriverDash from "../components/Driver/DriverDash.jsx";
+import UserManual from "../components/UI/UserManual.jsx";
 
 
 const Routers = () => {
@@ -37,6 +38,7 @@ const Routers = () => {
       <Route path="/blogs/:slug" element={<BlogDetails />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="*" element={<NotFound />} />
+      <Route path="/userMn" element={<UserManual />} />
 
 
         <Route path="/login" element={<Login />} />
