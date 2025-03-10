@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import './Register.css';
 import ToastNotification, {showToast} from "../UI/ToastNotification.jsx";
+import imageLogin from "../../assets/all-images/slider-img/slider-5.jpg";
+
 const Register = () => {
     const [userData, setUserData] = useState({
         username: "",
@@ -48,17 +50,17 @@ const Register = () => {
 
 
     return (
-        <div className="container vh-80 bg-light mt-5 mb-5 " >
-            <ToastNotification />
-            <div className="row justify-content-center" >
-                <div className="col-lg-6 col-md-8 col-12">
-                    <div className="card shadow-lg border-0">
+        <div className="container  mt-5 mb-3" >
+
+            <div className=" justify-content-center" >
+                <div className="">
+                    <div className="card shadow-lg p-4 d-flex flex-row" style={{ width: "auto" }}>
                         <div className="row g-0">
                             {/* Form Section */}
-                            <div className="col-md-6 d-flex align-items-center justify-content-center">
+                            <div className="w-50">
                                 <img
-                                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpWb5M0JkMTFGQd0LpXMOduNUYfIhEfx_sWA&s/400x500"
-                                    alt="Register Illustration"
+                                    src={imageLogin}
+                                    alt="Login Illustration"
                                     className="img-fluid rounded-start"
                                 />
                             </div>
@@ -138,6 +140,7 @@ const Register = () => {
                     </div>
                 </div>
             </div>
+            <ToastNotification />
         </div>
     );
 };

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import {Link, useNavigate} from "react-router-dom";
 import './Login.css';
-import imageLogin from "../../assets/all-images/login/delivery_taxi_06.jpg"
+import imageLogin from "../../assets/all-images/slider-img/slider-6.jpg"
 
 const Login = () => {
     const [userData, setUserData] = useState({ email: "", password: "" });
@@ -66,8 +66,8 @@ const Login = () => {
     };
 
     return (
-        <div className="d-flex justify-content-center align-items-center vh-80 bg-light mt-5 mb-5">
-            <div className="card shadow-lg p-4 d-flex flex-row" style={{ width: "700px" }}>
+        <div className="container  mt-5 mb-5">
+            <div className="card shadow-lg p-4 d-flex flex-row" style={{ width: "auto" }}>
                 <div className="w-50">
                     <img
                         src={imageLogin}
