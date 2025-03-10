@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {Link} from "react-router-dom";
 import {Button} from "react-bootstrap";
+import ToastNotification, {showToast} from "../../UI/ToastNotification.jsx";
 
 const UserList = () => {
     const [users, setUsers] = useState([]);
@@ -48,7 +49,11 @@ const UserList = () => {
                 password: "",
                 role: "customer"
             });
+            if(response.status === 201 || response.status === 200) {
+                showToast(200, "User Create is successfully! ✅");
+            }
         } catch (error) {
+            showToast(500, "Error: Something went wrong! ❌");
             console.error("Error during registration:", error.response?.data?.error || "Unknown error");
         }
     };
@@ -86,6 +91,7 @@ const UserList = () => {
             setUsers(response.data);
         } catch (error) {
             console.error("Error filtering users by role:", error);
+            showToast(500, "Error: Something went wrong! ❌");
         } finally {
             setLoading(false);
         }
@@ -128,10 +134,11 @@ const UserList = () => {
             );
             if (response.status === 200) {
                 setUsers(users.filter(user => user.id !== id)); // Update the UI
+                showToast(200, "User Delete  is successfully! ✅");
             }
         } catch (error) {
             console.error("Error deleting user:", error);
-            alert("Failed to delete user.");
+            showToast(500, "Error: Something went wrong! ❌");
         }
     };
 
@@ -172,8 +179,12 @@ const UserList = () => {
                 password: "",
                 role: "customer"
             });
+            if (response.status === 200) {
+                showToast(200, "User Update  is successfully! ✅");
+            }
         } catch (error) {
             console.error("Error updating user:", error);
+            showToast(500, "Error: Something went wrong! ❌");
         }
     };
 
@@ -194,6 +205,7 @@ const UserList = () => {
 
     return (
         <div className="container mt-5">
+            <ToastNotification />
             <Link to={'/admin'} className='mb-4'>
                 <Button variant="outline-dark" >
                     🔙
