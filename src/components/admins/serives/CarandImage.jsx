@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import {Button} from "react-bootstrap";
 import {Link} from "react-router-dom";
+import ToastNotification, {showToast} from "../../UI/ToastNotification.jsx";
 
 const createCar = async (formData) => {
     try {
@@ -10,7 +11,12 @@ const createCar = async (formData) => {
             headers: { 'Content-Type': 'multipart/form-data' }
         });
         return response.data;
+        // eslint-disable-next-line no-unreachable
+        if(response.status === 200 || response.status === 201) {
+            showToast(200, "Car Add is successfully! ✅");
+        }
     } catch (error) {
+        showToast(500, "Error: Something went wrong! ❌");
         console.error('Error uploading car and image', error);
         throw error;
     }
@@ -23,8 +29,13 @@ const updateCar = async (carId, formData) => {
             headers: { 'Content-Type': 'multipart/form-data' }
         });
         return response.data;
+        // eslint-disable-next-line no-unreachable
+        if (response.status === 200 || response.status === 201) {
+            showToast(200, "Car Update is successfully! ✅");
+        }
     } catch (error) {
         console.error('Error updating car and image', error);
+        showToast(500, "Error: Something went wrong! ❌");
         throw error;
     }
 };
@@ -35,10 +46,10 @@ const deleteCar = async (carId) => {
             headers: { 'Content-Type': 'multipart/form-data' },
             params: { carId: carId }
         });
-        alert('Car deleted successfully!');
+        showToast(200, "Book Delete is successfully! ✅");
     } catch (error) {
         console.error('Error deleting car', error);
-        alert('Error deleting car');
+        showToast(500, "Error: Something went wrong! ❌");
     }
 };
 
@@ -105,7 +116,7 @@ function CarForm() {
                 setCars([...cars, newCar]);
             }
 
-            alert('Car details saved successfully!');
+
             reset();
             setFile(null);
         } catch (error) {
@@ -131,7 +142,7 @@ function CarForm() {
         try {
             await deleteCar(carId);
             setCars(cars.filter(car => car.id !== carId));
-            alert('Car deleted successfully!');
+
         } catch (error) {
             console.error('Error deleting car', error);
         }
@@ -163,7 +174,7 @@ function CarForm() {
 
     return (
         <div className="container mt-4">
-            {/* Inputs Section */}
+            {/* Inputs Section */}  <ToastNotification />
             <div className="card p-4 mb-4">
                  <Link to={'/admin'} className='mb-2'>
                     <Button variant="outline-dark" >
