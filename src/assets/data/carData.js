@@ -105,7 +105,7 @@ const carData = [
   },
 
   {
-    id: 10,
+    id: 7,
     brand: "Audi",
     rating: 82,
     carName: "Suzuki Ted",

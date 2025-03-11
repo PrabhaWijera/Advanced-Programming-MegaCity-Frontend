@@ -6,6 +6,8 @@ import {Link} from "react-router-dom";
 import ToastNotification, {showToast} from "../../UI/ToastNotification.jsx";
 import { validateCarData } from "../../../context/ValidateCarData.jsx";
 const createCar = async (formData) => {
+
+
     try {
         const response = await axios.post('http://localhost:8080/MegaCity_war_exploded/uploadCarWithImage', formData, {
             headers: { 'Content-Type': 'multipart/form-data' }
@@ -96,7 +98,6 @@ function CarForm() {
 
 
         if (!validateCarData(data, showToast)) return;
-
 
         try {
             const formData = new FormData();
@@ -197,7 +198,7 @@ function CarForm() {
                         </div>
                         <div className="col-md-4 mb-3">
                             <label className="form-label">Plate Number</label>
-                            <input type="text" className="form-control" {...register('plateNumber', { required: 'Plate number is required' })} />
+                            <input type="text" className="form-control" {...register('plateNumber', { required: 'Plate number is required' })} placeholder={'ABC-2001'} />
                             {errors.plateNumber && <span className="text-danger">{errors.plateNumber.message}</span>}
                         </div>
                         <div className="col-md-4 mb-3">
