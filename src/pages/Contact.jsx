@@ -4,7 +4,7 @@ import Helmet from "../components/Helmet/Helmet.jsx";
 import CommonSection from "../components/UI/CommonSection";
 import ToastNotification, { showToast } from "../../src/components/UI/ToastNotification.jsx";
 import "../styles/contact.css";
-
+import { validateName, validateEmail, validateMessage } from "../context/validationContact.jsx";
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -17,15 +17,45 @@ const Contact = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    message: ""
+  });
+  const validateForm = () => {
+    let formErrors = { name: "", email: "", message: "" };
+    let isValid = true;
 
+    // Name validation
+    if (!validateName(formData.name)) {
+      formErrors.name = "Name must be at least 3 characters long.";
+      isValid = false;
+    }
+
+    // Email validation
+    if (!validateEmail(formData.email)) {
+      formErrors.email = "Please enter a valid email address.";
+      isValid = false;
+    }
+
+    // Message validation
+    if (!validateMessage(formData.message)) {
+      formErrors.message = "Message must be at least 10 characters long.";
+      isValid = false;
+    }
+
+    setErrors(formErrors);
+    return isValid;
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Simple form validation
-    if (!formData.name || !formData.email || !formData.message) {
-      setStatus("All fields are required.");
+    if (!validateForm()) {
+      setStatus("Please fix the errors before submitting.");
       return;
     }
+
 
     setIsLoading(true);
     setStatus(""); // Reset status message before submitting
