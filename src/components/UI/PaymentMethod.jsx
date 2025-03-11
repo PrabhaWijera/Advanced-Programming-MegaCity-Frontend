@@ -139,33 +139,33 @@ const PaymentMethod = ({UserData,BookingData}) => {
             <form onSubmit={handleSubmit}>
 
                 <div className="payment mt-3">
-                    <div className="mb-3">
-                        <label htmlFor="bookingId" className="form-label">Booking ID:</label>
-                        <input
-                            type="number"
-                            className="form-control"
-                            name="bookingId"
-                            id="bookingId"
-                            value={formData.bookingId}
-                            onChange={handleChange}
-                            required
-                            readOnly
-                        />
-                    </div>
+                    {/*<div className="mb-3">*/}
+                    {/*    <label htmlFor="bookingId" className="form-label">Booking ID:</label>*/}
+                    {/*    <input*/}
+                    {/*        type="number"*/}
+                    {/*        className="form-control"*/}
+                    {/*        name="bookingId"*/}
+                    {/*        id="bookingId"*/}
+                    {/*        value={formData.bookingId}*/}
+                    {/*        onChange={handleChange}*/}
+                    {/*        required*/}
+                    {/*        readOnly*/}
+                    {/*    />*/}
+                    {/*</div>*/}
 
-                    <div className="mb-3">
-                        <label htmlFor="userId" className="form-label">User ID:</label>
-                        <input
-                            type="number"
-                            className="form-control"
-                            name="userId"
-                            id="userId"
-                            value={formData.userId}
-                            onChange={handleChange}
-                            required
-                            readOnly
-                        />
-                    </div>
+                    {/*<div className="mb-3">*/}
+                    {/*    <label htmlFor="userId" className="form-label">User ID:</label>*/}
+                    {/*    <input*/}
+                    {/*        type="number"*/}
+                    {/*        className="form-control"*/}
+                    {/*        name="userId"*/}
+                    {/*        id="userId"*/}
+                    {/*        value={formData.userId}*/}
+                    {/*        onChange={handleChange}*/}
+                    {/*        required*/}
+                    {/*        readOnly*/}
+                    {/*    />*/}
+                    {/*</div>*/}
 
                     <div className="mb-3">
                         <label htmlFor="paymentAmount" className="form-label">Amount:</label>
