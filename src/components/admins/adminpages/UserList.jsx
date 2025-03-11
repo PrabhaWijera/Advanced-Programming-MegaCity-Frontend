@@ -3,6 +3,7 @@ import axios from "axios";
 import {Link} from "react-router-dom";
 import {Button} from "react-bootstrap";
 import ToastNotification, {showToast} from "../../UI/ToastNotification.jsx";
+import {validateUserData} from "../../../context/RegisterValidations.jsx";
 
 const UserList = () => {
     const [users, setUsers] = useState([]);
@@ -25,6 +26,7 @@ const UserList = () => {
     // Register new user
     const handleRegister = async (event) => {
         event.preventDefault();
+        if (!validateUserData(userData, showToast)) return;
         console.log(userData);
         try {
             const response = await axios.post("http://localhost:8080/MegaCity_war_exploded/register",
