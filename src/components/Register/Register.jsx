@@ -3,6 +3,8 @@ import axios from "axios";
 import './Register.css';
 import ToastNotification, {showToast} from "../UI/ToastNotification.jsx";
 import imageLogin from "../../assets/all-images/slider-img/slider-5.jpg";
+import { validateUserData } from "../../context/RegisterValidations.jsx";
+
 
 const Register = () => {
     const [userData, setUserData] = useState({
@@ -21,6 +23,9 @@ const Register = () => {
     const handleRegister = async (event) => {
         event.preventDefault();
         console.log(userData);
+
+        if (!validateUserData(userData, showToast)) return;
+
         try {
             const response = await axios.post("http://localhost:8080/MegaCity_war_exploded/register",
                 new URLSearchParams({
@@ -38,7 +43,7 @@ const Register = () => {
             console.log(URLSearchParams);
             console.log(response.data.message);
             if(response.status === 201 || response.status === 200) {
-                showToast(200, "Book is successfully! ✅");
+                showToast(200, "Register is successfully! ✅");
             }
         } catch (error) {
             showToast(500, "Error: Something went wrong! ❌");
