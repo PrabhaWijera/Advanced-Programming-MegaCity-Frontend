@@ -4,7 +4,7 @@ import axios from 'axios';
 import {Button} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import ToastNotification, {showToast} from "../../UI/ToastNotification.jsx";
-
+import { validateCarData } from "../../../context/ValidateCarData.jsx";
 const createCar = async (formData) => {
     try {
         const response = await axios.post('http://localhost:8080/MegaCity_war_exploded/uploadCarWithImage', formData, {
@@ -93,18 +93,19 @@ function CarForm() {
     };
 
     const onSubmit = async (data) => {
-        const formData = new FormData();
-        formData.append('name', data.name);
-        formData.append('model', data.model);
-        formData.append('plate_number', data.plateNumber);
-        formData.append('year', data.year);
-        formData.append('status', data.status);
 
-        if (file) {
-            formData.append('carImage', file);
-        }
+
+        if (!validateCarData(data, showToast)) return;
+
 
         try {
+            const formData = new FormData();
+            formData.append('name', data.name);
+            formData.append('model', data.model);
+            formData.append('plate_number', data.plateNumber);
+            formData.append('year', data.year);
+            formData.append('status', data.status);
+
             setUploading(true);
 
             if (selectedCar) {
