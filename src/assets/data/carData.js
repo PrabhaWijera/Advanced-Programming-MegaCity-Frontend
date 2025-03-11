@@ -105,10 +105,10 @@ const carData = [
   },
 
   {
-    id: 7,
+    id: 10,
     brand: "Audi",
     rating: 82,
-    carName: "PUNISHER101",
+    carName: "Suzuki Ted",
     imgUrl: img07,
     model: "Model 3",
     price: 50,
