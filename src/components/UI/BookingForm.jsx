@@ -4,7 +4,8 @@ import { Col, Form } from "reactstrap";
 import axios from "axios";
 import PaymentMethod from "./PaymentMethod.jsx";
 import placesandprces from "../../assets/data/placeandprice.json";
-import ToastNotification, {showToast} from "./ToastNotification.jsx"; // Ensure this path is correct
+import ToastNotification, {showToast} from "./ToastNotification.jsx";
+import PaymentTypes from "./PaymentTypes.jsx"; // Ensure this path is correct
 
 const BookingForm = ({ carData, backendCarData }) => {
     const [user, setUser] = useState(null);
@@ -105,7 +106,8 @@ const BookingForm = ({ carData, backendCarData }) => {
         e.preventDefault();
 
         if (!startDate || !endDate || !fromPlace || !toPlace || !price) {
-            alert("Please fill in all required fields.");
+
+            showToast(400, "Please fill in all required fields.");
             return;
         }
 
@@ -131,7 +133,7 @@ const BookingForm = ({ carData, backendCarData }) => {
                 showToast(200, "Book is successfully! ✅");
             }
 
-            alert(response.data);
+
         } catch (error) {
             console.error('Error creating booking', error);
             showToast(500, "Error: Something went wrong! ❌");
@@ -231,10 +233,12 @@ const BookingForm = ({ carData, backendCarData }) => {
 
                         <button type="submit" className="btn btn-primary">Submit Booking</button>
                     </Form>
+
                 </Col>
 
                 {IsVisible && (
                     <Col lg="12" className="mt-5">
+                        <PaymentTypes/>
                         <PaymentMethod UserData={user?.id} BookingData={totalAmount}/>
                     </Col>
                 )}
