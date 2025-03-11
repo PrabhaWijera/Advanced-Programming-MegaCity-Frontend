@@ -145,6 +145,22 @@ const BookingForm = ({ carData, backendCarData }) => {
                 <Col lg="12" className="mb-5">
                     <Form onSubmit={handleSubmit}>
                         <div className="mb-3">
+                            <label htmlFor="totalAmount" className="form-label">Total Amount</label>
+                            <input
+                                type="number"
+                                className="form-control"
+                                id="totalAmount"
+                                value={totalAmount}
+                                disabled
+                            />
+                        </div>
+
+                        {price && (
+                            <div className="mb-3">
+                                <p className="fw-bold">Price for {fromPlace} to {toPlace}: RS.{price}.00 per day</p>
+                            </div>
+                        )}
+                        <div className="mb-3">
                             <label htmlFor="startDate" className="form-label">Start Date</label>
                             <input
                                 type="date"
@@ -168,22 +184,7 @@ const BookingForm = ({ carData, backendCarData }) => {
                             />
                         </div>
 
-                        <div className="mb-3">
-                            <label htmlFor="totalAmount" className="form-label">Total Amount</label>
-                            <input
-                                type="number"
-                                className="form-control"
-                                id="totalAmount"
-                                value={totalAmount}
-                                disabled
-                            />
-                        </div>
 
-                        {price && (
-                            <div className="mb-3">
-                                <p className="fw-bold">Price for {fromPlace} to {toPlace}: RS.{price}.00 per day</p>
-                            </div>
-                        )}
 
                         <div className="mb-3">
                             <label htmlFor="fromPlace" className="form-label">From Place</label>
