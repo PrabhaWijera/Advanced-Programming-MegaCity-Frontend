@@ -154,6 +154,11 @@ const AdminDashboard = () => {
                             Check the QR codes
                         </Button>
                     </Link>
+                    <Link to={'/Reviews'}>
+                        <Button variant="light" className="w-100 mb-2">
+                            Check Reviews
+                        </Button>
+                    </Link>
                 </Col>
                 <Col md={9} className="p-4">
                     <Row>
