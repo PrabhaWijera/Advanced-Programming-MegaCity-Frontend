@@ -17,9 +17,14 @@ const AdminDashboard = () => {
     const [internetSpeed, setInternetSpeed] = useState(null);
     const [serverStatus, setServerStatus] = useState("Checking...");
 
+    const [reviews, setReviews] = useState([]);  // State to store reviews
+    const [loading, setLoading] = useState(false);  // State for loading state
+    const [error, setError] = useState(null);  // State for errors
+
+    const token = localStorage.getItem('token');
+
     // Fetch initial data from server (users and cars data)
     useEffect(() => {
-        // Fetch user and car data
         const fetchData = async () => {
             try {
                 const userResponse = await fetch("http://localhost:8080/MegaCity_war_exploded/users");
@@ -35,44 +40,35 @@ const AdminDashboard = () => {
         };
         fetchData();
 
-        // Fetch metrics initially
         fetchMetrics();
 
-        // Periodically fetch metrics every 5 seconds
         const intervalId = setInterval(fetchMetrics, 5000);
-        return () => clearInterval(intervalId); // Cleanup on component unmount
+        return () => clearInterval(intervalId);
     }, []);
 
     const fetchMetrics = () => {
-        // 1. Get stress value (simulate browser stress or use real page load time)
         const stressValue = calculateStress();
         setStress(stressValue);
 
-        // 2. Get performance data (page load time)
         if (window.performance) {
             const performanceData = window.performance.timing;
             const pageLoadTime = performanceData.loadEventEnd - performanceData.navigationStart;
             setPerformance(pageLoadTime);
         }
 
-        // 3. Get data volume (network connection data)
         if (navigator.connection) {
             const connection = navigator.connection;
-            const dataUsage = connection.downlink * 100; // in KB/s
+            const dataUsage = connection.downlink * 100;
             setDataVolume(dataUsage);
-
-            // 4. Measuring internet speed
             const downloadSpeed = connection.downlink;
             setInternetSpeed(`${downloadSpeed.toFixed(2)} Mbps`);
         }
 
-        // 5. Check server status
         checkServerStatus();
     };
 
     const calculateStress = () => {
-        // You can modify this to be more sophisticated if needed
-        return Math.random() * 100; // Random stress value between 0 and 100
+        return Math.random() * 100;  // Random stress value between 0 and 100
     };
 
     const checkServerStatus = async () => {
@@ -88,13 +84,51 @@ const AdminDashboard = () => {
         }
     };
 
+    // Fetch reviews from the API when the component mounts
+    useEffect(() => {
+        if (!token) return;
+
+        const fetchReviews = async () => {
+            try {
+                setLoading(true);
+                const response = await fetch('http://localhost:8080/MegaCity_war_exploded/submitReview', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`,  // Attach token in Authorization header
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch reviews');
+                }
+
+                const data = await response.json();
+                setReviews(data);  // Store reviews in the state
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchReviews();
+    }, [token]);
+
+    // Calculate average rating from reviews
+    const calculateAverageRating = () => {
+        if (reviews.length === 0) return 0;
+
+        const totalRating = reviews.reduce((acc, review) => acc + review.rating, 0);
+        return (totalRating / reviews.length).toFixed(1);
+    };
+
     const stats = [
         { title: "Total Users", value: users, icon: <FaUsers /> },
         { title: "Total Cars", value: cars, icon: <FaCar /> },
-        { title: "Booking Rating", value: "4.7/5", icon: <FaStar /> },
+        { title: "Booking Rating", value: `${calculateAverageRating()}/5`, icon: <FaStar /> },  // Update value dynamically
     ];
 
-    // Internet Speed Animation with react-spring
     const internetSpeedAnimation = useSpring({
         opacity: internetSpeed ? 1 : 0.5,
         transform: internetSpeed ? "translateX(0)" : "translateX(-100px)",
@@ -109,35 +143,31 @@ const AdminDashboard = () => {
                 </Navbar.Brand>
                 <Nav>
                     <Dropdown className="me-3">
-
-                            <FaTools size={24} />
-                            <Link to={"/admin-faq"}>
-                                <Button variant="secondary" id="admin-service">
+                        <FaTools size={24} />
+                        <Link to={"/admin-faq"}>
+                            <Button variant="secondary" id="admin-service">
                                 Services Report UserManual
                             </Button>
-                            </Link>
-
+                        </Link>
                     </Dropdown>
                 </Nav>
             </Navbar>
 
             <Row>
                 <Col md={3} className="bg-dark text-white p-4" style={{ minHeight: "100vh" }}>
-
                     <h5 className="fw-bold">Admin Services</h5>
                     <hr />
                     <Link to={'/admin-user'}>
-                    <Button variant="light" className="w-100 mb-2">
-                        User Management
-                    </Button>
+                        <Button variant="light" className="w-100 mb-2">
+                            User Management
+                        </Button>
                     </Link>
 
-
-                        <Link to={'/carswithimages'}>
-                            <Button variant="light" className="w-100 mb-2">
+                    <Link to={'/carswithimages'}>
+                        <Button variant="light" className="w-100 mb-2">
                             Car Management
-                            </Button>
-                        </Link>
+                        </Button>
+                    </Link>
 
                     <Link to={'/booking'}>
                         <Button variant="light" className="w-100 mb-2">
@@ -226,7 +256,6 @@ const AdminDashboard = () => {
                         </Col>
                     </Row>
 
-                    {/* New Section for Internet Speed and Server Status */}
                     <Row>
                         <Col md={6}>
                             <Card className="p-3 text-center">
@@ -251,22 +280,22 @@ const AdminDashboard = () => {
                         </Col>
                     </Row>
 
-                    <Row>
-                        <Col>
-                            <Card className="p-3">
-                                <h5>Booking Trends</h5>
-                                <Chart
-                                    options={{
-                                        chart: { id: "basic-bar" },
-                                        xaxis: { categories: ["Jan", "Feb", "Mar", "Apr", "May"] },
-                                    }}
-                                    series={[{ name: "Bookings", data: [30, 40, 45, 50, 49] }]}
-                                    type="bar"
-                                    height={250}
-                                />
-                            </Card>
-                        </Col>
-                    </Row>
+                    {/*<Row>*/}
+                    {/*    <Col>*/}
+                    {/*        <Card className="p-3">*/}
+                    {/*            <h5>Booking Trends</h5>*/}
+                    {/*            <Chart*/}
+                    {/*                options={{*/}
+                    {/*                    chart: { id: "basic-bar" },*/}
+                    {/*                    xaxis: { categories: ["Jan", "Feb", "Mar", "Apr", "May"] },*/}
+                    {/*                }}*/}
+                    {/*                series={[{ name: "Bookings", data: [30, 40, 45, 50, 49] }]}*/}
+                    {/*                type="bar"*/}
+                    {/*                height={250}*/}
+                    {/*            />*/}
+                    {/*        </Card>*/}
+                    {/*    </Col>*/}
+                    {/*</Row>*/}
                 </Col>
             </Row>
         </Container>
