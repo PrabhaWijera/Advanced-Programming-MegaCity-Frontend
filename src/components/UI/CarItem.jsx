@@ -1,5 +1,5 @@
 import React from "react";
-import { Col } from "reactstrap";
+import {Button, Col} from "reactstrap";
 import { Link } from "react-router-dom";
 import "../../styles/car-item.css";
 import carJsonData from "../../assets/data/carData.js"; // Import JSON data
@@ -44,13 +44,13 @@ const CarItem = (props) => {
             </span>
             </div>
 
-            <button className=" w-50 car__item-btn car__btn-rent">
-              <Link to={`/cars/${carName}`}>Rent</Link>
-            </button>
+            {/*<button className=" w-50 car__item-btn car__btn-rent">*/}
+            {/*  <Link to={`/cars/${carName}`}>Rent</Link>*/}
+            {/*</button>*/}
 
-            <button className=" w-50 car__item-btn car__btn-details">
+            <Button className=" w-100 car__item-btn car__btn-details">
               <Link to={`/cars/${carName}`}>Details</Link>
-            </button>
+            </Button>
           </div>
         </div>
       </Col>
