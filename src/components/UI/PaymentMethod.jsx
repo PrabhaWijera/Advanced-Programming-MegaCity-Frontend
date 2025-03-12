@@ -4,7 +4,9 @@ import paypal from "../../assets/all-images/paypal.jpg";
 import "../../styles/payment-method.css";
 import axios from "axios";
 import QRCodeGenerator from "./QRCodeGenerator.jsx";
-import ToastNotification, {showToast} from "./ToastNotification.jsx";
+import ToastNotification, { showToast } from "./ToastNotification.jsx";
+import BookingReport from "./BookingReport";  // Import PDF component
+import { PDFDownloadLink } from "@react-pdf/renderer"; // Import PDF downloader
 
 const API_URL = "http://localhost:8080/MegaCity_war_exploded/payment";
 const USER_PROFILE_URL = "http://localhost:8080/MegaCity_war_exploded/profile";
@@ -15,30 +17,32 @@ const generateTransactionId = () => {
 };
 
 // eslint-disable-next-line react/prop-types
-const PaymentMethod = ({UserData,BookingData}) => {
+const PaymentMethod = ({ UserData, BookingData }) => {
     const [payments, setPayments] = useState([]);
     const [qrData, setQrData] = useState("");
-    const[BookingDetails,setBookingDetails]=useState(null);
+    const [BookingDetails, setBookingDetails] = useState(null);
+    const [showDownloadLink, setShowDownloadLink] = useState(false); // To show the download button after payment
+
     const [formData, setFormData] = useState({
         bookingId: BookingDetails,
-        // eslint-disable-next-line react/prop-types
-        userId: UserData,
+        userId: UserData.userId,
         paymentAmount: BookingData,
         currency: "LKR",
         paymentMethod: "credit_card",
         paymentStatus: "",
-        transactionId: generateTransactionId()
+        transactionId: generateTransactionId(),
     });
 
-    const [paymentStatusUpdate, setPaymentStatusUpdate] = useState("");
-    const [paymentIdToUpdate, setPaymentIdToUpdate] = useState("");
+    const [UserDatafroReport, setUserDatafroReport] = useState({
+        userId: UserData.userId,
+        userEmail: UserData.userEmail,
+    });
 
     useEffect(() => {
-
         axios.get(API_URL)
             .then(response => setPayments(response.data))
             .catch(error => console.error("Error fetching payments:", error));
-        console.log("UserData.id",UserData);
+        console.log("UserData.id", UserData);
     }, []);
 
     const fetchBookingDetails = async (userId) => {
@@ -47,10 +51,8 @@ const PaymentMethod = ({UserData,BookingData}) => {
                 params: { userId }
             });
             if (response.data && response.data.length > 0) {
-                // Assuming the first booking is the one you want
-                const booking = response.data[0];
-                // Set the bookingId based on the user's booking
-                setBookingDetails(booking.id)
+                const booking = response.data[0]; // Assuming first booking is relevant
+                setBookingDetails(booking);
                 setFormData(prevData => ({ ...prevData, bookingId: booking.id }));
             } else {
                 console.error('No booking details found for this user');
@@ -59,6 +61,7 @@ const PaymentMethod = ({UserData,BookingData}) => {
             console.error('Error fetching booking details:', error);
         }
     };
+
     useEffect(() => {
         const fetchProfile = async () => {
             const token = localStorage.getItem('token');
@@ -77,8 +80,18 @@ const PaymentMethod = ({UserData,BookingData}) => {
 
                 if (response.ok) {
                     const data = await response.json();
-                    setFormData(prevData => ({ ...prevData, userId: data.id }));
+                    setFormData(prevData => ({
+                        ...prevData,
+                        userId: data.id,  // Store userId
+                        userEmail: data.email  // Store userEmail
+                    }));
+                    setUserDatafroReport({
+                        userId: data.id,
+                        userEmail: data.email,
+                    });
                     fetchBookingDetails(data.id);
+
+
                 } else {
                     console.error('Failed to fetch user profile');
                 }
@@ -90,22 +103,9 @@ const PaymentMethod = ({UserData,BookingData}) => {
         fetchProfile();
     }, []);
 
-    // Handle form input change
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
-
-    // Submit new payment
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     try {
-    //         await axios.post(API_URL, formData);
-    //         alert("Payment successful!");
-    //     } catch (error) {
-    //         alert("Payment failed!");
-    //         console.error("Error:", error);
-    //     }
-    // };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -113,12 +113,10 @@ const PaymentMethod = ({UserData,BookingData}) => {
             const response = await axios.post(API_URL, formData);
 
             if (response.status === 201) {
-                showToast(201, "Payment is successfully! ✅");
-                console.log("Payment was created successfully:", response.data);
+                showToast(201, "Payment successful! ✅");
                 setQrData(JSON.stringify(formData));
+                setShowDownloadLink(true); // Show PDF download button
             }
-
-            alert("Payment successful!");
         } catch (error) {
             showToast(500, "Error: Something went wrong! ❌");
             console.error("Error:", error);
@@ -126,47 +124,17 @@ const PaymentMethod = ({UserData,BookingData}) => {
     };
 
     const handleDownload = (imageURL) => {
-        // Create an anchor element to download the image
         const link = document.createElement('a');
         link.href = imageURL;
-        link.download = 'QR.png'; // Set the download file name
-        link.click(); // Trigger the download
+        link.download = 'QR.png';
+        link.click();
     };
 
     return (
         <div className="container mt-5">
             <ToastNotification />
             <form onSubmit={handleSubmit}>
-
                 <div className="payment mt-3">
-                    {/*<div className="mb-3">*/}
-                    {/*    <label htmlFor="bookingId" className="form-label">Booking ID:</label>*/}
-                    {/*    <input*/}
-                    {/*        type="number"*/}
-                    {/*        className="form-control"*/}
-                    {/*        name="bookingId"*/}
-                    {/*        id="bookingId"*/}
-                    {/*        value={formData.bookingId}*/}
-                    {/*        onChange={handleChange}*/}
-                    {/*        required*/}
-                    {/*        readOnly*/}
-                    {/*    />*/}
-                    {/*</div>*/}
-
-                    {/*<div className="mb-3">*/}
-                    {/*    <label htmlFor="userId" className="form-label">User ID:</label>*/}
-                    {/*    <input*/}
-                    {/*        type="number"*/}
-                    {/*        className="form-control"*/}
-                    {/*        name="userId"*/}
-                    {/*        id="userId"*/}
-                    {/*        value={formData.userId}*/}
-                    {/*        onChange={handleChange}*/}
-                    {/*        required*/}
-                    {/*        readOnly*/}
-                    {/*    />*/}
-                    {/*</div>*/}
-
                     <div className="mb-3">
                         <label htmlFor="paymentAmount" className="form-label">Amount:</label>
                         <input
@@ -185,7 +153,6 @@ const PaymentMethod = ({UserData,BookingData}) => {
                         <select name="currency" id="currency" className="form-select" value={formData.currency}
                                 onChange={handleChange}>
                             <option value="LKR">LKR</option>
-
                         </select>
                     </div>
 
@@ -206,18 +173,60 @@ const PaymentMethod = ({UserData,BookingData}) => {
                             name="transactionId"
                             id="transactionId"
                             value={formData.transactionId}
-                            onChange={handleChange}
-                            readOnly // Prevent user from modifying it
+                            readOnly
                         />
                     </div>
 
                     <button type="submit" className="btn btn-primary w-100">Make Payment</button>
-                    {/* Display QR code if data is available */}
+
                     {qrData && <QRCodeGenerator data={qrData} onDownload={handleDownload} />}
+
+                    {/* PDF Download Button */}
+                    {showDownloadLink && BookingDetails && (
+                        <div className="mt-3">
+                            <PDFDownloadLink
+                                document={
+                                    <BookingReport
+                                        booking={{
+                                            transactionId: formData.transactionId,
+                                            paymentAmount: formData.paymentAmount,
+                                            paymentStatus: formData.paymentStatus,
+                                            currency: formData.currency,  // Pass currency
+                                            paymentMethod: formData.paymentMethod,  // Pass paymentMethod
+                                            bookingId: formData.bookingId,  // Pass bookingId
+                                        }}
+                                        UserDatafroReport={{
+                                            userId: UserDatafroReport.userId,
+                                            userEmail: UserDatafroReport.userEmail,
+                                        }}
+                                    />
+                                }
+                                fileName={`Payment_Report_${formData.transactionId}.pdf`}
+                                className="btn btn-success w-100 mt-2"
+                                onClick={() => {
+                                    // Log user details to the console
+                                    console.log('User Details:', {
+                                        userId: UserDatafroReport.userId,
+                                        userEmail: UserDatafroReport.userEmail,
+                                    });
+                                    console.log('Booking Details:', {
+                                        transactionId: formData.transactionId,
+                                        paymentAmount: formData.paymentAmount,
+                                        paymentStatus: formData.paymentStatus,
+                                        currency: formData.currency,
+                                        paymentMethod: formData.paymentMethod,
+                                        bookingId: formData.bookingId,
+                                    });
+                                }}
+                            >
+                                {({ loading }) => (loading ? 'Generating PDF...' : 'Download Payment Receipt')}
+                            </PDFDownloadLink>
+                        </div>
+                    )}
+
                 </div>
             </form>
         </div>
-
     );
 };
 
