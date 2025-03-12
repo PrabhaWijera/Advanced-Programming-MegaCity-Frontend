@@ -66,13 +66,10 @@ const Header = () => {
                 <Link to={'/register'} className=" d-flex align-items-center gap-1">
                   <i className="ri-user-line"></i> Register
                 </Link>
-                {
-                  isLogged &&(
                         <Link to={"/profile"} className="d-flex align-items-center gap-1">
                           <i className="ri-account-pin-circle-line"></i> Profile
                         </Link>
-                    )
-                }
+
                 <Link to={'/userMn'} className=" d-flex align-items-center gap-1">
                   <i className="ri-chat-heart-fill"></i> User Manual
                 </Link>
