@@ -108,7 +108,7 @@ const Login = () => {
                                 <input type="checkbox" id="rememberMe" />
                                 <label htmlFor="rememberMe" className="ms-2">Remember Me</label>
                             </div>
-                            <a href="#" className="text-decoration-none">Forgot password?</a>
+                            {/*<a href="#" className="text-decoration-none">Forgot password?</a>*/}
                         </div>
                         <button type="submit" className="btn btn-primary w-100">Login</button>
                     </form>
