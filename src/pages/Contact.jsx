@@ -44,7 +44,7 @@ const Contact = () => {
           // Update formData with the fetched user ID
           setFormData((prevFormData) => ({
             ...prevFormData,
-            user_id: data.id, // Update user_id in formData
+            user_id: data.id || '1', // Update user_id in formData
           }));
 
           setStatusCode(response.status);
