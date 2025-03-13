@@ -7,12 +7,63 @@ import "../styles/contact.css";
 import { validateName, validateEmail, validateMessage } from "../context/validationContact.jsx";
 
 const Contact = () => {
+  const [statusCode, setStatusCode] = useState(null);
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
+  const [user, setUser] = useState({}); // Initialize user as an empty object
+  const [UserId, setUserId] = useState(null);
+
   const [formData, setFormData] = useState({
-    user_id: "1", // Assuming this is the logged-in user's ID
+    user_id: '', // Initially set as an empty string
     name: "",
     email: "",
     message: "",
   });
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setError('No authentication token found');
+        return;
+      }
+
+      try {
+        const response = await fetch('http://localhost:8080/MegaCity_war_exploded/profile', {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setUser(data); // Set the user data
+          setUserId(data.id);
+
+          // Update formData with the fetched user ID
+          setFormData((prevFormData) => ({
+            ...prevFormData,
+            user_id: data.id, // Update user_id in formData
+          }));
+
+          setStatusCode(response.status);
+          setMessage(response.message);
+        } else {
+          const errorData = await response.json();
+          setError(errorData.message || 'Failed to fetch user data');
+          setStatusCode(response.status);
+          setMessage(response.message);
+        }
+      } catch (err) {
+        setError('Error fetching user data');
+        console.error(err);
+      }
+    };
+
+    fetchProfile();
+
+  }, []);
 
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -60,7 +111,7 @@ const Contact = () => {
       if (response.ok) {
         showToast(200, "Message sent successfully! ✅");
         // Reset form data after success
-        setFormData({ user_id: "1", name: "", email: "", message: "" });
+        setFormData({ user_id: "", name: "", email: "", message: "" });
       } else {
         const result = await response.json();
         showToast(400, result.error || "Error sending message.");
