@@ -12,7 +12,7 @@ const Register = () => {
         email: "",
         password: "",
         phone: "",
-        role: "Customer",
+        role: "customer",
     });
 
     const handleChange = (e) => {

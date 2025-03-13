@@ -15,6 +15,8 @@ function UserProfile() {
 
     const [statusCode, setStatusCode] = useState(null);
     const [message, setMessage] = useState('');
+    const[UserId,setUserId]=useState(null);
+
 
     // Fetch user profile details when the component mounts
     useEffect(() => {
@@ -36,10 +38,13 @@ function UserProfile() {
                 if (response.ok) {
                     const data = await response.json();
                     setUser(data);
+                    setUserId(data.id);
+                    console.log(data.id);
                     setStatusCode(response.status);
                     setMessage(response.message);
                     // Fetch user's profile image after fetching the profile data
                     fetchProfileImage(data.email);  // Pass the user's email to fetch their profile image
+
                 } else {
                     const errorData = await response.json();
                     setError(errorData.message || 'Failed to fetch user data');
@@ -54,7 +59,11 @@ function UserProfile() {
 
         fetchProfile();
     }, []);
-
+    useEffect(() => {
+        if (UserId !== null) {
+            localStorage.setItem('UserId', UserId);
+        }
+    }, [UserId]);
     // Fetch the user's profile image from the server using their email
     const fetchProfileImage = async (email) => {
         const token = localStorage.getItem('token');
