@@ -135,9 +135,9 @@ const Register = () => {
                                     <div className="d-flex justify-content-between">
 
                                         <a href="/login" className="text-muted">Login</a>
-                                        <button className="btn btn-danger btn-sm">
-                                            Sign up with Google
-                                        </button>
+                                        {/*<button className="btn btn-danger btn-sm">*/}
+                                        {/*    Sign up with Google*/}
+                                        {/*</button>*/}
                                     </div>
                                 </form>
                             </div>
