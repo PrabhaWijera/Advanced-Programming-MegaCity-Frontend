@@ -189,6 +189,11 @@ const AdminDashboard = () => {
                             Check Reviews
                         </Button>
                     </Link>
+                    <Link to={'/contactsView'}>
+                        <Button variant="light" className="w-100 mb-2">
+                            ContactsView
+                        </Button>
+                    </Link>
                 </Col>
                 <Col md={9} className="p-4">
                     <Row>

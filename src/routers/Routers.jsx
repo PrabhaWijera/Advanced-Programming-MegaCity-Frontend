@@ -24,6 +24,7 @@ import QRCodeScanner from "../components/admins/adminpages/QRCodeScanner.jsx";
 import DriverDash from "../components/Driver/DriverDash.jsx";
 import UserManual from "../components/UI/UserManual.jsx";
 import Reviews from "../components/admins/serives/CheckReviews.jsx";
+import ContactList from "../components/admins/serives/ContactList.jsx";
 
 
 const Routers = () => {
@@ -64,6 +65,7 @@ const Routers = () => {
         <Route path="/booking" element={<BookingManage />} />
         <Route path="/carswithimages" element={<CarForm />} />
         <Route path="/Reviews" element={<Reviews />} />
+        <Route path="/contactsView" element={<ContactList />} />
         <Route path="/Payments" element={<Payment />} />
     </Routes>
   );
