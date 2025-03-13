@@ -3,7 +3,7 @@ import React from 'react';
 import {Link} from "react-router-dom";
 import DriverAssignBooking from "./DriverAssignBooking.jsx";
 import {Button} from "reactstrap";
-
+import driver from "../../assets/all-images/slider-img/slider-4.jpg"
 const DriverDash = () => {
 
 
@@ -15,7 +15,7 @@ const DriverDash = () => {
                     <h4>Driver Services</h4>
                     <Link to={'/assinBooking'}>
                         <Button variant="light" className="w-100 mb-2">
-                            DriverAssignBooking
+                           Assigned Rides
                         </Button>
                     </Link>
                 </nav>
@@ -27,7 +27,7 @@ const DriverDash = () => {
                         {/* Left Top Section */}
                         <div className="col-md-4">
                             <h2>Dashboard Overview</h2>
-                            <h5 className="text-muted">Your Statistics</h5>
+                            <img src={driver} alt=""/>
                         </div>
 
 
